@@ -11,6 +11,14 @@ from .enums.item_type_enum import ItemTypeEnum
 
 from .entities.item import Item
 
+from .repo.user_repository_mock import UserRepositoryMock
+
+from .repo.transaction_repository_mock import TransactionRepositoryMock
+
+from .enums.transaction_type_enum import TransactionTypeEnum
+
+from .entities.user import User
+
 
 app = FastAPI()
 
