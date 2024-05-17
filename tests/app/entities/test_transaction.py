@@ -71,3 +71,12 @@ class Test_Transaction:
         with pytest.raises(ParamNotValidated):
             Transaction(type=TransactionTypeEnum.DEPOSIT, value=100.0, current_balance=100.0, timestamp=-1)
 ###TIMESTAMP_TESTS###
+
+###TODICT_TESTS###
+
+    def test_transaction_to_dict(self):
+        transaction = Transaction(TransactionTypeEnum.DEPOSIT, 100.0, 100.0, 1234567.890)
+        assert transaction.to_dict() == {"type": transaction.type,
+                                         "value": transaction.value,
+                                         "current_balance": transaction.current_balance,
+                                         "timestamp": transaction.timestamp}

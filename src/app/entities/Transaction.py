@@ -69,6 +69,14 @@ class Transaction:
         if timestamp < 0:
             return (False, "Tempo deve ser um número positivo")
         return (True, "")
+
+    def to_dict(self):
+        return {
+            "type": self.type,
+            "value": self.value,
+            "current_balance": self.current_balance,
+            "timestamp": self.timestamp,
+        }
     
     def __eq__(self,other):
         return self.type == other.type and self.value == other.value and self.current_balance == other.current_balance and self.timestamp == other.timestamp

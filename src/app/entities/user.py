@@ -71,9 +71,9 @@ class User:
             return (False, "A conta precisa ser uma string")
         else:
             if conta.find("-") != 5:
-                return (False, "Formato inválido")
-            if len(conta) != 6:
-                return (False, "Formato inválido")
+                return (False, "Formato inválido a")
+            if len(conta) != 7:
+                return (False, "Formato inválido b")
         return (True, "")
     
     @staticmethod
