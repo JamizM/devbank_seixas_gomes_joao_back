@@ -32,10 +32,10 @@ class Transaction:
 
     #validações de campos 
     @staticmethod
-    def validate_type(type: TransactionTypeEnum) -> Tuple[bool, str]:
+    def validate_type(transaction_type: TransactionTypeEnum) -> Tuple[bool, str]:
         if type is None:
             return (False, "Tipo é obrigatório")
-        if type not in TransactionTypeEnum:
+        if type(transaction_type) != TransactionTypeEnum:
             return (False, "Tipo inválido")
         return (True, "")
     
@@ -66,6 +66,8 @@ class Transaction:
             return (False, "Tempo é obrigatório")
         if type(timestamp) != float:
             return (False, "Tempo deve ser um float")
+        if timestamp < 0:
+            return (False, "Tempo deve ser um número positivo")
         return (True, "")
     
     def __eq__(self,other):

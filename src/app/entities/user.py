@@ -59,8 +59,11 @@ class User:
     def validate_conta(conta: str) -> Tuple[bool, str]:
         if conta is None:
             return (False, "É necessária uma conta")
-        if "-" not in conta:
-            return(False, "Toda conta precisa de um '-' ")
+        if type(conta) != str:
+            return (False, "A conta precisa ser uma string")
+        else:
+            if "-" not in conta:
+                return (False, "Toda conta precisa de um '-' ")
         return (True, "")
     
     @staticmethod
@@ -86,6 +89,8 @@ class User:
             "name": self.name,
             "agencia": self.agencia,
             "conta": self.conta,
+            "current_balance": self.current_balance,
+            "admin_permission": self.admin_permission
         }
     
     def __eq__(self,other):
