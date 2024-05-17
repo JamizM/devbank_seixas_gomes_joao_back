@@ -4,11 +4,11 @@ from ..enums.transaction_type_enum import TransactionTypeEnum
 
 class Transaction:
     type: TransactionTypeEnum
-    value: int
-    current_balance: int
+    value: float
+    current_balance: float
     timestamp: float
 
-    def __init__(self, type: TransactionTypeEnum=None, value: int=None, current_balance: int=None, timestamp: float=None):
+    def __init__(self, type: TransactionTypeEnum=None, value: float=None, current_balance: float=None, timestamp: float=None):
 
         validation_type = self.validate_type(type)
         if validation_type[0] is False:
@@ -40,22 +40,22 @@ class Transaction:
         return (True, "")
     
     @staticmethod
-    def validate_value(value: int) -> Tuple[bool, str]:
+    def validate_value(value: float) -> Tuple[bool, str]:
         if value is None:
             return (False, "Valor é obrigatório")
-        if type(value) != int:
-            return (False, "Valor deve ser um inteiro")
+        if type(value) != float:
+            return (False, "Valor deve ser um float")
         if value < 0:
-            return (False, "Valor deve ser um número positivo")
+            return (False, "Uma transação deve conter um valor positivo")
         return (True, "") 
     
 
     @staticmethod
-    def validate_current_balance(current_balance: int) -> Tuple[bool, str]:
+    def validate_current_balance(current_balance: float) -> Tuple[bool, str]:
         if current_balance is None:
             return (False, "Saldo é obrigatório")
-        if type(current_balance) != int:
-            return (False, "Saldo deve ser um inteiro, Ex: 1000")
+        if type(current_balance) != float:
+            return (False, "Saldo deve ser um float, Ex: 1000.0")
         if current_balance < 0:
             return (False, "Saldo deve ser um número positivo")
         return (True, "")

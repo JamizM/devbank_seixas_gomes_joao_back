@@ -8,14 +8,14 @@ from ..entities.Transaction import Transaction
 
 class ITransactionRepository(ABC):
     @abstractmethod
-    def get_all_transactions(self) -> List[Transaction]:
+    def get_all_transactions(self, transaction_id: int) -> List[Transaction]:
         '''
         Returns all the itens in the database 
         '''
         pass
     
     @abstractmethod
-    def get_transaction(self, Transaction_id: int) -> Optional[Transaction]:
+    def get_transaction(self, transaction_id: int) -> Optional[Transaction]:
         '''
         Returns the item with the given id.
         If the item does not exist, returns None
@@ -23,7 +23,7 @@ class ITransactionRepository(ABC):
         pass
     
     @abstractmethod
-    def create_transaction(self, Transaction: Transaction, Transaction_id: int) -> Transaction:
+    def create_transaction(self, transaction_id: int, transaction: Transaction) -> Transaction:
         '''
         Creates a new item in the database
         '''
@@ -37,7 +37,11 @@ class ITransactionRepository(ABC):
         '''
         
     @abstractmethod
-    def update_transaction(self, Transiction_id:int, name:str=None, price:float=None, Transiction_type:TransactionTypeEnum=None, admin_permission:bool=None) -> Transaction:
+    def update_transaction(self, transaction_id: int,
+                           transaction_type: TransactionTypeEnum = None,
+                           value: float = None,
+                           current_balance: float = None,
+                           timestamp: float = None) -> Transaction:
         '''
         Updates the item with the given id.
         If the item does not exist, returns None

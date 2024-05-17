@@ -6,12 +6,12 @@ import re #importado para a verificação de senha
 
 class User:
     name: str
-    agencia: int
+    agencia: str
     conta: str
     current_balance: float
     admin_permission: bool = False
     
-    def __init__(self, name: str=None, agencia: int = None, conta: str=None, current_balance:float=None, admin_permission: bool=None):
+    def __init__(self, name: str=None, agencia: str = None, conta: str=None, current_balance:float=None, admin_permission: bool=None):
         validation_name = self.validate_name(name)
         if validation_name[0] is False:
             raise ParamNotValidated("nome", validation_name[1])
@@ -48,11 +48,19 @@ class User:
         return (True, "")
         
     @staticmethod
-    def validate_agencia(agencia: int) -> Tuple[bool, str]:
+    def validate_agencia(agencia: str) -> Tuple[bool, str]:
         if agencia is None:
             return (False, "Uma agência é necesária")
-        if type(agencia) != int:
-            return (False, "A agência precisa ser um inteiro")
+        if type(agencia) != str:
+            return (False, "A agência precisa ser uma string")
+        if len(agencia) != 4:
+            return (False, "A agência precisa conter apenas 4 digitos")
+
+        try:
+            int(agencia)
+        except ValueError:
+            return (False, "A agencia precisa conter 4 digitos no formato (xxxx), com x indo de 0 a 9")
+
         return (True, "")
     
     @staticmethod
