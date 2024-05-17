@@ -30,12 +30,19 @@ class Test_User:
         with pytest.raises(ParamNotValidated):
             User(name='test', agencia=None, conta='12345-6', current_balance=0.0, admin_permission=True)
 
-    def test_user_agencia_not_string(self):
+    def test_user_agencia_not_float1(self):
         with pytest.raises(ParamNotValidated):
             User(name='test', agencia=1.0, conta='12345-6', current_balance=0.0, admin_permission=True)
-    def test_user_agencia_not_float(self):
+    def test_user_agencia_not_float2(self):
         with pytest.raises(ParamNotValidated):
             User(name='test', agencia=1, conta='12345-6', current_balance=0.0, admin_permission=True)
+
+    def test_user_agencia_format(self):
+        with pytest.raises(ParamNotValidated):
+            User(name='test', agencia="00-0", conta='12345-6', current_balance=0.0, admin_permission=True)
+    def test_user_agencia_format2(self):
+        with pytest.raises(ParamNotValidated):
+            User(name='test', agencia="00000", conta='12345-6', current_balance=0.0, admin_permission=True)
 ###AGENCIA_TESTS###
 
 ###CONTA_TESTS###
@@ -50,6 +57,10 @@ class Test_User:
     def test_user_conta_format(self):
         with pytest.raises(ParamNotValidated):
             User(name='test', agencia="0000", conta='123456', current_balance=0.0, admin_permission=True)
+    def test_user_conta_format2(self):
+        with pytest.raises(ParamNotValidated):
+            User(name='test', agencia="0000", conta='1-3456', current_balance=0.0, admin_permission=True)
+
 ###CONTA_TESTS###
 
 ###CBALANCE_TESTS###

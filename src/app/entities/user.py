@@ -70,8 +70,10 @@ class User:
         if type(conta) != str:
             return (False, "A conta precisa ser uma string")
         else:
-            if "-" not in conta:
-                return (False, "Toda conta precisa de um '-' ")
+            if conta.find("-") != 5:
+                return (False, "Formato inválido")
+            if len(conta) != 6:
+                return (False, "Formato inválido")
         return (True, "")
     
     @staticmethod
