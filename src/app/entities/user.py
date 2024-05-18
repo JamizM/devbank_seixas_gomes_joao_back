@@ -80,7 +80,7 @@ class User:
     def validate_current_balance(current_balance: float) -> Tuple[bool, str]:
         if current_balance is None:
             return (False, "Saldo é necessário")
-        if type(current_balance) != float:
+        if type(current_balance) != float and current_balance != 0:
             return (False, "Saldo precisa ser um float")
         if current_balance < 0:
             return (False, "Saldo precisa ser um número positivo")

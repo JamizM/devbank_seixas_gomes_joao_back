@@ -10,17 +10,37 @@ class TransactionRepositoryMock(ITransactionRepository):
 
     def __init__(self):
         self.transactions = {
-            1: Transaction(type=TransactionTypeEnum.DEPOSIT, value=1000.0, current_balance=1000.0, timestamp=1234567890),
-            2: Transaction(type=TransactionTypeEnum.WITHDRAW, value=500.0, current_balance=500.0, timestamp=987654321),
+            1: Transaction(type=TransactionTypeEnum.DEPOSIT, value=1000.0, current_balance=1000.0,
+                           timestamp=1234567890.0),
+            2: Transaction(type=TransactionTypeEnum.WITHDRAW, value=500.0, current_balance=500.0,
+                           timestamp=987654321.0),
         }
 
-    def get_all_transactions(self, transaction_id: int) -> Optional[Transaction]:
+    def get_all_transactions(self) -> Optional[List[Transaction]]:
+
+        return [transaction for transaction in self.transactions.values()]
+
+    def get_transaction(self, transaction_id: int) -> Optional[Transaction]:
+
         return self.transactions.get(transaction_id, None)
+
+    def get_transaction_id(self, type: TransactionTypeEnum, value: float, timestamp: float) -> Optional[Transaction]:
+
+        for id in self.transactions.keys():
+            transaction = self.transactions[id]
+            if [transaction.type, transaction.value, transaction.timestamp] == [type, value, timestamp]:
+                return id
+
+        return None
 
     def create_transaction(self, transaction_id: int, transaction: Transaction) -> Optional[Transaction]:
         if not self.transactions.get(transaction_id, None):
+            self.transactions[transaction_id] = transaction
             return transaction
-        return
+        return None
+
+    def delete_transaction(self, transaction_id: int) -> Optional[Transaction]:
+        return self.transactions.pop(transaction_id, None)
 
     def update_transaction(self, transaction_id: int,
                            transaction_type: TransactionTypeEnum = None,
@@ -43,10 +63,6 @@ class TransactionRepositoryMock(ITransactionRepository):
 
             self.transactions[transaction_id] = transaction
 
-        return transaction
+            return transaction
 
-
-
-
-
-
+        return None
