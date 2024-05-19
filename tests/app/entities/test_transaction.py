@@ -1,5 +1,5 @@
 import pytest
-from src.app.entities.Transaction import Transaction
+from src.app.entities.transaction import Transaction
 from src.app.enums.transaction_type_enum import TransactionTypeEnum
 from src.app.errors.entity_errors import ParamNotValidated
 

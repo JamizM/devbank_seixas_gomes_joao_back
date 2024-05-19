@@ -3,7 +3,7 @@ from typing import List, Optional, Tuple
 
 from ..enums.transaction_type_enum import TransactionTypeEnum
 
-from ..entities.Transaction import Transaction
+from ..entities.transaction import Transaction
 
 
 class ITransactionRepository(ABC):

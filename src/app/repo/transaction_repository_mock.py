@@ -1,7 +1,7 @@
 from typing import Dict, Optional, List
 
 from ..enums.transaction_type_enum import TransactionTypeEnum
-from ..entities.Transaction import Transaction
+from ..entities.transaction import Transaction
 from .transaction_repository_interface import ITransactionRepository
 
 
