@@ -6,7 +6,10 @@ from src.app.repo.user_repository_mock import UserRepositoryMock
 class Test_UserRepositoryMock:
     def test_get_all_users(self):
         repo = UserRepositoryMock()
-        assert all([user_expect == user for user_expect, user in zip(repo.users.values(), repo.get_all_users())])
+        expected = [(user_id, user) for user_id, user in zip(repo.users.keys(), repo.users.values())]
+
+        for user in repo.get_all_users():
+            assert user in expected
 
     def test_get_user(self):
         repo = UserRepositoryMock()

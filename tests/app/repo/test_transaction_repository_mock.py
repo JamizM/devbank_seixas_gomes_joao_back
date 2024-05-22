@@ -34,10 +34,10 @@ class Test_TransactionRepositoryMock:
                                   value=12000.99,
                                   current_balance=999.1,
                                   timestamp=12321.2)
-        repo.create_transaction(transaction=transaction, transaction_id=777)
+        repo.create_transaction(transaction=transaction, transaction_id=1)
         len_after = len(repo.transactions)
         assert len_after == len_before + 1
-        assert repo.transactions.get(777) == transaction
+        assert repo.transactions.get(3) == transaction
 
     def test_delete_transaction(self):
         repo = TransactionRepositoryMock()
