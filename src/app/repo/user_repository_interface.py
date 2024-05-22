@@ -9,7 +9,7 @@ from ..entities.user import User
 class IUserRepository(ABC):
 
     @abstractmethod
-    def get_all_users(self) -> Optional[dict[int, User]]:
+    def get_all_users(self) -> Optional[list[tuple[int, User]]]:
         '''
         Returns the User with the given user_id.
         If the User does not exist, returns None

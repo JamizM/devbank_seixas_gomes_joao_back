@@ -34,10 +34,10 @@ class TransactionRepositoryMock(ITransactionRepository):
         return None
 
     def create_transaction(self, transaction_id: int, transaction: Transaction) -> Optional[Transaction]:
-        if not self.transactions.get(transaction_id, None):
-            self.transactions[transaction_id] = transaction
-            return transaction
-        return None
+        while self.transactions.get(transaction_id, None):
+            transaction_id += 1
+        self.transactions[transaction_id] = transaction
+        return transaction
 
     def delete_transaction(self, transaction_id: int) -> Optional[Transaction]:
         return self.transactions.pop(transaction_id, None)

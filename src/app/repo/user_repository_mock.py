@@ -15,8 +15,8 @@ class UserRepositoryMock(IUserRepository, ABC):
             321: User(name="Jao do Bao", agencia="0001", conta="10000-0", current_balance=1001.1, admin_permission=True),
         }
 
-    def get_all_users(self) -> Optional[List[User]]:
-        return [user for user in self.users.values()]
+    def get_all_users(self) -> Optional[List[tuple[int, User]]]:
+        return [(user_id, user) for user_id, user in zip(self.users.keys(), self.users.values())]
 
     def get_user(self, user_id: int) -> Optional[User]:
         return self.users.get(user_id, None)
