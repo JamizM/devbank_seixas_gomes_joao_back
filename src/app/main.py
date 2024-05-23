@@ -85,5 +85,47 @@ def deposit(request: dict):
         "timestamp": transaction.timestamp
     }
 
+
+
+@app.post("/withdraw")
+def withdraw(request: dict):
+
+    model = {
+        "2": 0,
+        "5": 0,
+        "10": 0,
+        "20": 0,
+        "50": 0,
+        "100": 0,
+        "200": 0
+    }
+
+    transaction_value = 0.0
+
+    for key in request:
+        if model.get(key, None) is not None:
+            transaction_value += int(key) * float(request[key])
+
+    user = user_repo.get_user(user_id=in_use_id)
+
+    if transaction_value > user.current_balance: #caso valor da transacao seja maior que o saldo do usuario
+        raise HTTPException(status_code=403, detail="Saldo insuficiente para transação")
+
+    user.current_balance -= transaction_value #atualiza o saldo do usuario caso a transacao seja possivel
+
+    transaction = Transaction(type=TransactionTypeEnum.WITHDRAW,
+                              value=transaction_value,
+                              current_balance=user.current_balance,
+                              timestamp=1001.0)
+
+    transaction_repo.create_transaction(transaction_id=int((transaction.current_balance*transaction.value)/1000),
+                                        transaction=transaction) #registrando uma nova transação com um ID específico no repositório de transações.
+
+    return {
+        "current_balance": transaction.current_balance,
+        "timestamp": transaction.timestamp
+    }
+
+
 handler = Mangum(app, lifespan="off")
 

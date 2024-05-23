@@ -1,6 +1,8 @@
 from fastapi import FastAPI, HTTPException
 from mangum import Mangum
 
+from src.app import repo
+
 from .environments import Environments
 
 from .repo.item_repository_mock import ItemRepositoryMock
