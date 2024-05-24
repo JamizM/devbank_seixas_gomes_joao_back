@@ -3,6 +3,10 @@ from src.app.entities import transaction
 from src.app.main import get_user, deposit, withdraw
 from src.app.repo.transaction_repository_mock import TransactionRepositoryMock
 from src.app.repo.user_repository_mock import UserRepositoryMock
+from ...src.app.enums.transaction_type_enum import TransactionTypeEnum
+from src.app.entities.transaction import Transaction
+from src.app.main import get_history
+
 
 class Test_Main:
 
@@ -52,3 +56,28 @@ class Test_Main:
             "current_balance": user_repo.get_user(1).current_balance,
             "timestamp": time.time()
         }
+    
+
+
+    def test_get_history(self):
+        user_repo = UserRepositoryMock()
+        transaction_repo = TransactionRepositoryMock()
+
+        mock_transactions = [
+            Transaction(
+                type=TransactionTypeEnum.DEPOSIT,
+                value=100.0,
+                current_balance=1000.0,
+                timestamp=1234567890.0,
+
+            ),
+            Transaction(
+                type=TransactionTypeEnum.WITHDRAW,
+                value=50.0,
+                current_balance=950.0,
+                timestamp=1234567891.0,
+
+            )
+        ]
+        assert transaction_repo.create_transaction(1, mock_transactions[0])
+    

@@ -127,5 +127,27 @@ def withdraw(request: dict):
     }
 
 
+
+@app.get("/history")
+def get_history(user_id: int = in_use_id):
+
+    user = user_repo.get_user(user_id=user_id)
+    
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    all_transactions = transaction_repo.get_all_transactions()
+    
+    
+    transaction_history = []
+    for transaction in all_transactions:
+        transaction_history.append({
+            "type": transaction.type.value,
+            "value": transaction.value,
+            "current_balance": transaction.current_balance,
+            "timestamp": transaction.timestamp
+        })
+    
+    return {"history": transaction_history}
 handler = Mangum(app, lifespan="off")
 
