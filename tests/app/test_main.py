@@ -5,7 +5,6 @@ from src.app.repo.transaction_repository_mock import TransactionRepositoryMock
 from src.app.repo.user_repository_mock import UserRepositoryMock
 from ...src.app.enums.transaction_type_enum import TransactionTypeEnum
 from src.app.entities.transaction import Transaction
-from src.app.main import get_history
 
 
 class Test_Main:
