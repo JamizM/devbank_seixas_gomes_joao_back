@@ -1,7 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import List, Optional, Tuple
-
-from ..enums.transaction_type_enum import TransactionTypeEnum
+from typing import Optional
 
 from ..entities.user import User
 
@@ -30,7 +28,6 @@ class IUserRepository(ABC):
         Returns the user_id with the given User: name, agencia, conta.
         If the User does not exist, returns None
         '''
-
 
     @abstractmethod
     def create_user(self, user_id: int, user: User) -> Optional[User]:

@@ -15,9 +15,9 @@ transaction_repo = Environments.get_transaction_repo()
 in_use_id = 1
 factor = 2
 
+
 @app.get("/")
 def get_user():
-
     user = user_repo.get_user(user_id=in_use_id)
 
     if not user:
@@ -25,29 +25,9 @@ def get_user():
 
     return user.to_dict()
 
-# @app.get("/users/get_all_users")
-# def get_all_items():
-#     users = user_repo.get_all_users()
-#     json = {}
-#
-#     for user in users:
-#         json["user_id: " + str(users[0])]: user.to_dict()
-#
-#     return json
-
-# @app.get("/users/{user_id}")
-# def get_user(user_id: int):
-#
-#     user = user_repo.get_user(user_id)
-#
-#     if not user:
-#         raise HTTPException(status_code=400, detail="User not found")
-#
-#     return user.to_dict()
 
 @app.post("/deposit")
 def deposit(request: dict):
-
     model = {
         "2": 0,
         "5": 0,
@@ -61,7 +41,6 @@ def deposit(request: dict):
     transaction_value = 0.0
 
     for key in request:
-        print(model.get(key, None))
         if model.get(key, None) is not None:
             transaction_value += int(key) * float(request[key])
 
@@ -77,7 +56,7 @@ def deposit(request: dict):
                               current_balance=user.current_balance,
                               timestamp=1001.0)
 
-    transaction_repo.create_transaction(transaction_id=int((transaction.current_balance*transaction.value)/1000),
+    transaction_repo.create_transaction(transaction_id=int((transaction.current_balance * transaction.value) / 1000),
                                         transaction=transaction)
 
     return {
@@ -86,10 +65,8 @@ def deposit(request: dict):
     }
 
 
-
 @app.post("/withdraw")
 def withdraw(request: dict):
-
     model = {
         "2": 0,
         "5": 0,
@@ -108,18 +85,18 @@ def withdraw(request: dict):
 
     user = user_repo.get_user(user_id=in_use_id)
 
-    if transaction_value > user.current_balance: #caso valor da transacao seja maior que o saldo do usuario
+    if transaction_value > user.current_balance:  #caso valor da transacao seja maior que o saldo do usuario
         raise HTTPException(status_code=403, detail="Saldo insuficiente para transação")
 
-    user.current_balance -= transaction_value #atualiza o saldo do usuario caso a transacao seja possivel
+    user.current_balance -= transaction_value  #atualiza o saldo do usuario caso a transacao seja possivel
 
     transaction = Transaction(type=TransactionTypeEnum.WITHDRAW,
-                              value=transaction_value,
+                              value=user.current_balance,
                               current_balance=user.current_balance,
                               timestamp=1001.0)
 
-    transaction_repo.create_transaction(transaction_id=int((transaction.current_balance*transaction.value)/1000),
-                                        transaction=transaction) #registrando uma nova transação com um ID específico no repositório de transações.
+    transaction_repo.create_transaction(transaction_id=int((transaction.current_balance * transaction.value) / 1000),
+                                        transaction=transaction)  #registrando uma nova transação com um ID específico no repositório de transações.
 
     return {
         "current_balance": transaction.current_balance,
@@ -127,18 +104,15 @@ def withdraw(request: dict):
     }
 
 
-
 @app.get("/history")
 def get_history(user_id: int = in_use_id):
-
     user = user_repo.get_user(user_id=user_id)
-    
+
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
-    
+
     all_transactions = transaction_repo.get_all_transactions()
-    
-    
+
     transaction_history = []
     for transaction in all_transactions:
         transaction_history.append({
@@ -147,7 +121,8 @@ def get_history(user_id: int = in_use_id):
             "current_balance": transaction.current_balance,
             "timestamp": transaction.timestamp
         })
-    
-    return {"history": transaction_history}
-handler = Mangum(app, lifespan="off")
 
+    return {"history": transaction_history}
+
+
+handler = Mangum(app, lifespan="off")

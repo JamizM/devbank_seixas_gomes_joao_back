@@ -1,7 +1,6 @@
 from abc import ABC
 from typing import Dict, Optional, List
 
-from ..enums.transaction_type_enum import TransactionTypeEnum
 from ..entities.user import User
 from .user_repository_interface import IUserRepository
 

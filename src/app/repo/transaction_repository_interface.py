@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import List, Optional, Tuple
+from typing import List, Optional
 
 from ..enums.transaction_type_enum import TransactionTypeEnum
 
@@ -22,7 +22,7 @@ class ITransactionRepository(ABC):
         '''
         pass
 
-    def get_transaction_id(self, type: TransactionTypeEnum, value: float, timestamp: int) -> Optional[Transaction]:
+    def get_transaction_id(self, type: TransactionTypeEnum, value: float, timestamp: int) -> Optional[int]:
         '''
         Returns the transaction_id with the given Transaction: type, value and timestamp.
         If the transaction does not exist, returns None

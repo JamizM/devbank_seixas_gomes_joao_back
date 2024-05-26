@@ -1,9 +1,7 @@
 from enum import Enum
 import os
-from typing import Type
 
 from .errors.environment_errors import EnvironmentNotFound
-from .repo.item_repository_interface import IItemRepository
 from .repo.transaction_repository_interface import ITransactionRepository
 
 from .repo.transaction_repository_mock import TransactionRepositoryMock

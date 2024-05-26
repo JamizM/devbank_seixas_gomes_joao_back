@@ -1,4 +1,3 @@
-import pytest
 from src.app.entities.transaction import Transaction
 from src.app.enums.transaction_type_enum import TransactionTypeEnum
 from src.app.repo.transaction_repository_mock import TransactionRepositoryMock
